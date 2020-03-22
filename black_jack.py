@@ -1,9 +1,13 @@
-from random import randint as r
+import random, json
+from flask import Flask
 
+app = Flask(__name__)
 
 class Blackjack():
 
-    black_jack_cards = [
+
+    def __init__(self):
+        self.card = [
     {'number': '1', 'suit': 'Ouro'},
     {'number': '2', 'suit': 'Ouro'},
     {'number': '3', 'suit': 'Ouro'},
@@ -56,30 +60,11 @@ class Blackjack():
     {'number': '11', 'suit': 'Paus'},
     {'number': '12', 'suit': 'Paus'},
     {'number': '13', 'suit': 'Paus'}
-]
+        ]
+    @app.route('/', methods=['GET'])
+    def get_cards():
+        cartas = Blackjack()
+        lista = random.choices(cartas.card, k= len(cartas.card))
+        return json.dumps(lista)
 
-
-    def __init__(self, card = {'numero': '0', 'suit': 'None'}):
-        self.card = card
-
-
-    def get_card(self):
-        return self.card
-
-
-    def set_card(self, x: dict):
-        self.card = x
-
-
-    def pick_card(self):
-        indice_card = r(0,len(self.black_jack_cards)-1)
-        print(len(self.black_jack_cards))
-        return self.black_jack_cards.pop(indice_card)
-
-eu = Blackjack()
-while True:
-    opt = input('Pressione 1 para pegar uma carta e 0 para sair:')
-    if opt.lower().strip() == '1':
-        print(f'A carta sorteada foi {eu.pick_card()}')
-    else:
-        break
+app.run(host='localhost', port=8080, debug=True)
