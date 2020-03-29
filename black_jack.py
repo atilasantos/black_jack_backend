@@ -67,4 +67,4 @@ class Blackjack():
         lista = random.choices(cartas.card, k= len(cartas.card))
         return json.dumps(lista)
 
-app.run(host='localhost', port=8080, debug=True)
+app.run(host='0.0.0.0', port=8080, debug=True)
